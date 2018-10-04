@@ -43,7 +43,7 @@ export default {
         },
 
     getResults2 () {
-           axios.post(`http://127.0.0.1:5000/json-example`, this.test)
+           axios.post(API_path + 'json-example', this.test)
            .then(response => {this.result = response.data})
            .catch(error => {
              console.log(error)
