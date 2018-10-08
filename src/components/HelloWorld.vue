@@ -1,5 +1,6 @@
 <template>
   <div class="hello">
+    <img v-on:click="active_component='section_i'" alt="Vue logo" src="../assets/main-art.png">
     <br>{{msg}}<br><br>
     <button @click="getResults">GET</button>
     <button @click="getResults2">POST</button>

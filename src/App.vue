@@ -1,23 +1,40 @@
 <template>
   <div id="app">
-    Kuba
-    <router-view/>
+    <NavBar></NavBar>
+    <div class="app_content">
+      <router-view/>
+    </div>
   </div>
 </template>
 
 <script>
+import NavBar from './components/NavBar'
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    'NavBar': NavBar
+  }
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+
+html {
+    height: 100%;
+    background: #F9F9F9;
+    display: block;
+}
+
+body{
+    margin:0;
+    font-family:"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    text-align:left;
+}
+
+.app_content {
+  width: 1000px;
+  margin: 0 auto;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+
 }
 </style>
