@@ -20,28 +20,4 @@
 
 <style scoped>
 
-.title {
-  padding: 50px 0 0 0;
-  font-size: 50px;
-  font-weight: lighter;
-  color: #676767;
-  letter-spacing: 4px;
-}
-
-.sub-title {
-  padding: 50px 0 0 0;
-  font-size: 12px;
-  font-weight: lighter;
-  color: #676767;
-  letter-spacing: 2px;
-}
-
-.accented {
-  padding: 50px 0 0 0;
-  font-size: 26px;
-  font-weight: lighter;
-  color: #676767;
-  letter-spacing: 2px;
-}
-
 </style>

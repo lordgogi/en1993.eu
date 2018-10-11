@@ -1,9 +1,7 @@
 <template>
   <div id="app">
     <NavBar></NavBar>
-    <div class="app_content">
-      <router-view/>
-    </div>
+    <router-view/>
   </div>
 </template>
 
@@ -21,20 +19,14 @@ export default {
 
 html {
     height: 100%;
-    background: #F9F9F9;
+    background: #FAFAFA;
     display: block;
 }
 
 body{
     margin:0;
-    font-family:"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
-    text-align:left;
+    font-family:"Metropolis",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    font-weight: 400;
 }
 
-.app_content {
-  width: 1000px;
-  margin: 0 auto;
-  text-align: center;
-
-}
 </style>
