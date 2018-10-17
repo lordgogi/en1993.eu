@@ -1,232 +1,59 @@
 <template>
   <div>
     <div class="cont">
-
-      <h1>H1 Login Header</h1>
-      <h2>H2 Page Header</h2>
-      <h3>H3 Modal, Wizard Header</h3>
-      <h4>H4 Card, Signpost Header</h4>
-      <h5>H5 Stack View Header</h5>
-      <h6>H6 Header</h6>
-
-      <p class="p1">p1 Body text</p>
-      <p class="p2">p2 Section header</p>
-      <p class="p3">p3 Table, grid, and form text</p>
-      <p class="p4">p4 Form labels and column headers</p>
-      <p class="p5">p5 Table footers and chart data</p>
-
       <div class="row">
-        <div class="card" style="width: 500px;">
 
-          <div class="card-header">
-            <h4 style="margin:0px;">John Doe</h4>
+        <div class="card" style="width: 400px;">
+          <div class="card-header" style="padding: 5px;">
+            <h6 style="margin:0px;">Select a predefined shape:</h6>
           </div>
-
-          <div class="card-block">
-
-            <div class="card-text">
-              <p class="p1">At vero eos et accusamus et iusto odio dignissimos du
-              cimus qui blanditiis praesentium voluptatum deleniti atq
-              ue corrupti quos dolores et quas molestias excepturi sint occ
-              aecati cupiditate non provident, similique sunt in culpa qui off
-              icia deserunt mollitia animi, id est laborum et dolorum fuga. Et h
-              quidem rerum facilis est et expedita distinctio. Nam libero tempore,
-               cum soluta nobis est eligend
-              i optio cumque nihil impedit quo minus id quod maxime placeat</p>
-            </div>
-
-            <div class="card-text">
-              <p class="p1">At vero eos et accusamus et iusto odio dignissimos du
-              cimus qui blanditiis praesentium voluptatum deleniti atq
-              ue corrupti quos dolores et quas molestias excepturi sint occ
-              aecati cupiditate non provident, similique sunt in culpa qui off
-              icia deserunt mollitia animi, id est laborum et dolorum fuga. Et h
-              quidem rerum facilis est et expedita distinctio. Nam libero tempore,
-               cum soluta nobis est eligend
-              i optio cumque nihil impedit quo minus id quod maxime placeat</p>
-            </div>
-
-          </div>
-
-          <div class="card-footer">
-            <button class="btn">Footer Action 1</button>
-          </div>
+          <img v-on:click="active_component='CrossSections_I_shape'" alt="I-section" src="../assets/icon-i-section-32.png">
+          <img v-on:click="active_component='CrossSections_rhs'" alt="RHS-section" src="../assets/icon-rhs-32.png">
+          <img alt="RHS-section" src="../assets/icon-u-shape-32.png">
+          <img alt="RHS-section" src="../assets/icon-l-shape-32.png">
+          <img alt="RHS-section" src="../assets/icon-plate-stiff-32.png">
+          <img alt="RHS-section" src="../assets/icon-t-stiff-32.png">
+          <img alt="RHS-section" src="../assets/icon-l-stiff-32.png">
         </div>
 
-        <div class="card" style="width: 500px;">
-
-          <div class="card-header">
-            <h4 style="margin:0px;">John Doe</h4>
+        <div class="card" style="width: 150px;">
+          <div class="card-header" style="padding: 5px;">
+            <h6 style="margin:0px;">Or standard profile:</h6>
           </div>
-
-          <div class="card-block">
-
-            <div class="card-text">
-              <p class="p1">At vero eos et accusamus et iusto odio dignissimos du
-              cimus qui blanditiis praesentium voluptatum deleniti atq
-              ue corrupti quos dolores et quas molestias excepturi sint occ
-              aecati cupiditate non provident, similique sunt in culpa qui off
-              icia deserunt mollitia animi, id est laborum et dolorum fuga. Et h
-              quidem rerum facilis est et expedita distinctio. Nam libero tempore,
-               cum soluta nobis est eligend
-              i optio cumque nihil impedit quo minus id quod maxime placeat</p>
-            </div>
-
-            <div class="card-text">
-              <p class="p1">At vero eos et accusamus et iusto odio dignissimos du
-              cimus qui blanditiis praesentium voluptatum deleniti atq
-              ue corrupti quos dolores et quas molestias excepturi sint occ
-              aecati cupiditate non provident, similique sunt in culpa qui off
-              icia deserunt mollitia animi, id est laborum et dolorum fuga. Et h
-              quidem rerum facilis est et expedita distinctio. Nam libero tempore,
-               cum soluta nobis est eligend
-              i optio cumque nihil impedit quo minus id quod maxime placeat</p>
-            </div>
-
-          </div>
-
-          <div class="card-footer">
-            <button class="btn">Footer Action 1</button>
-          </div>
+          <img alt="I-section" src="../assets/icon-en-32.png">
+          <img alt="RHS-section" src="../assets/icon-aisc-32.png">
         </div>
+
+        <div class="card" style="width: 200px;">
+          <div class="card-header" style="padding: 5px;">
+            <h6 style="margin:0px;">Or build custom profile:</h6>
+          </div>
+          <img alt="I-section" src="../assets/icon-custom-32.png">
+
+        </div>
+
       </div>
+      <component v-bind:is="active_component"></component>
+
     </div>
-
-
-
   </div>
 </template>
 
-<style>
+<script>
+import CrossSections_I_shape from './sections/CrossSections_I_shape';
+import CrossSections_rhs from './sections/CrossSections_rhs';
 
-h1 {
-  font-family: Metropolis Light;
-  color: #000000;
-  font-size: 32px;
-  font-weight: lighter;
-  letter-spacing: normal
+export default {
+  name: 'CrossSections',
+  components: {
+    'CrossSections_I_shape': CrossSections_I_shape,
+    'CrossSections_rhs': CrossSections_rhs,
+  },
+  data () {
+    return {
+      active_component: 'CrossSections_I_shape',
+
+    }
+  }
 }
-
-h2 {
-  font-family: Metropolis Light;
-  color: #000000;
-  font-size: 28px;
-  font-weight: lighter;
-  letter-spacing: normal
-}
-
-h3 {
-  font-family: Metropolis Light;
-  color: #000000;
-  font-size: 22px;
-  font-weight: lighter;
-  letter-spacing: normal
-}
-
-h4 {
-  font-family: Metropolis Light;
-  color: #000000;
-  font-size: 18px;
-  font-weight: lighter;
-  letter-spacing: normal
-}
-
-h5 {
-  font-family: Metropolis Regular;
-  color: #565656;
-  font-size: 16px;
-  font-weight: normal;
-  letter-spacing: 0.01em
-}
-
-h6 {
-  font-family: Metropolis Medium;
-  color: #313131;
-  font-size: 14px;
-  font-weight: normal;
-  letter-spacing: normal;
-}
-
-.p1 {
-  font-family: Metropolis Regular;
-  color: #565656;
-  font-size: 14px;
-  letter-spacing: normal;
-}
-
-.p2 {
-  font-family: Metropolis Medium;
-  color: #565656;
-  font-size: 13px;
-  letter-spacing: normal;
-}
-
-.p3 {
-  font-family: Metropolis Regular;
-  color: #565656;
-  font-size: 14px;
-  letter-spacing: normal;
-}
-
-.p4 {
-  font-family: Metropolis Semibold;
-  color: #565656;
-  font-size: 12px;
-  letter-spacing: normal;
-}
-
-.p5 {
-  font-family: Metropolis Regular;
-  color: #565656;
-  font-size: 12px;
-  letter-spacing: normal;
-}
-
-.card {
-    border: 1px solid #d7d7d7;
-    border-radius: 0.125rem;
-    box-shadow: 0 0.125rem 0 0 #d7d7d7;
-    background-color: #fff;
-    margin-top: 1rem;
-    width: 100%;
-}
-
-.card-header {
-  padding: 18px 12px;
-  border-bottom: 1px solid #eee;
-}
-
-.card-footer {
-  padding: 12px 18px;
-  border-bottom: 1px solid #eee;
-}
-
-.card-block {
-  padding: 12px 18px;
-  border-bottom: 1px solid #eee;
-}
-
-.card-text {
-
-}
-
-.btn {
-  cursor: pointer;
-  border: 1px solid #0079b8;
-  font-weight: 500;
-  border-color: #0079b8;
-  background-color: #0079b8;
-  color: #FFFFFF;
-}
-
-.row {
-
-}
-
-.cont {
-  padding: 50px;
-}
-
-
-
-</style>
+</script>
