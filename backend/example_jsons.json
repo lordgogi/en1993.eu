@@ -1,0 +1,22 @@
+test:	[
+        {
+          "material": "S355",
+          "type": "rectangle",
+          "coordinates": {
+            "x_1": 14,
+            "y_1": 14,
+            "x_2": 14,
+            "y_2": 14
+          }
+        },
+        {
+          "material": "S355",
+          "type": "rectangle",
+          "coordinates": {
+            "x_1": 14,
+            "y_1": 14,
+            "x_2": 14,
+            "y_2": 14
+          }
+        }
+    ]

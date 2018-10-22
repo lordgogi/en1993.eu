@@ -3,32 +3,40 @@
     <CrossSectionsHelper>
       <div slot="inputs">
 
-
         <div style="display: inline-block; vertical-align: text-top;">
 
+          <input type="radio" id="one" value="mm" v-model="units">
+          <label for="one" class="output" >metric</label>
+          <input type="radio" id="two" value="inch" v-model="units">
+          <label for="two" class="output" >US</label>
+          <br>
+          <br>
+
           <div style="padding:5px">
-            <div style="width: 30px; display: inline-block">b:</div>
-            <input type="number" style="width: 100px; display: inline-block"></input>
-            mm
+            <div class="output" style="width: 30px; display: inline-block">b:</div>
+            <input class="output" type="number" v-model="b" style="width: 100px; display: inline-block"/>
+            <div class="output">{{units}}</div>
           </div>
 
           <div style="padding:5px">
-            <div style="width: 30px; display: inline-block">h:</div>
-            <input type="number" style="width: 100px; display: inline-block"></input>
-            mm
+            <div class="output" style="width: 30px; display: inline-block">h:</div>
+            <input class="output" type="number" v-model="h" style="width: 100px; display: inline-block"></input>
+            <div class="output">{{units}}</div>
           </div>
 
           <div style="padding:5px">
-            <div style="width: 30px; display: inline-block">t<sub>w</sub>:</div>
-            <input type="number" style="width: 100px; display: inline-block"></input>
-            mm
+            <div class="output" style="width: 30px; display: inline-block">t<sub>w</sub>:</div>
+            <input class="output" type="number" v-model="t_w" style="width: 100px; display: inline-block"></input>
+            <div class="output">{{units}}</div>
           </div>
 
           <div style="padding:5px">
-            <div style="width: 30px; display: inline-block">t<sub>f</sub>:</div>
-            <input type="number" style="width: 100px; display: inline-block"></input>
-            mm
+            <div class="output" style="width: 30px; display: inline-block">t<sub>f</sub>:</div>
+            <input class="output" type="number" v-model="t_f" style="width: 100px; display: inline-block"></input>
+            <div class="output">{{units}}</div>
           </div>
+
+          <button v-on:click="submitBasic">Submit</button>
 
         </div>
 
@@ -40,26 +48,86 @@
       </div>
 
 
-      <h3 slot="outputs">Here is the Output slot</h3>
+      <div slot="outputs">
+        <ul>
+          <li v-for="item in result">
+            <div class="output" style="width: 50px;">{{item.label}}:</div>
+            <div class="output" style="width: 150px;">{{item.value}}</div>
+            <div class="output" style="width: 50px;">{{item.unit}}<sup>{{item.unit_pow}}</sup></div>
+            <div class="output">{{item.description}}</div>
+          </li>
+        </ul>
+      </div>
+
     </CrossSectionsHelper>
   </div>
 </template>
 
 <script>
 import CrossSectionsHelper from './CrossSectionsHelper.vue';
+import axios from 'axios'
+import { API_path } from '../../variables.js'
 
 export default{
+  name: 'CrossSections_I_shape',
   components:{
     'CrossSectionsHelper': CrossSectionsHelper
   },
   data(){
     return{
-
+      b:200,
+      h:400,
+      t_w:8,
+      t_f:12,
+      result:'',
+      units:'mm'
     }
   },
   methods:{
+    submitBasic () {
+           axios.post(API_path + 'json-example', this.getJSON())
+           .then(response => {this.result = response.data})
+           .catch(error => {
+             console.log(error)
+           })
+       },
+       getJSON : function(){
+          return [
+                  {
+                   "material": "S355",
+                   "type": "rectangle",
+                   "coordinates": {
+                     "x_1": 0,
+                     "y_1": this.h,
+                     "x_2": this.b,
+                     "y_2": this.h-this.t_f
+                   }
+                 },
+                 {
+                   "material": "S355",
+                   "type": "rectangle",
+                   "coordinates": {
+                     "x_1": this.b/2-this.t_w/2,
+                     "y_1": this.h-this.t_f,
+                     "x_2": this.b/2+this.t_w/2,
+                     "y_2": this.t_f
+                   }
+                 },
+                  {
+                   "material": "S355",
+                   "type": "rectangle",
+                   "coordinates": {
+                     "x_1": 0,
+                     "y_1": this.t_f,
+                     "x_2": this.b,
+                     "y_2": 0
+                   }
+                 }
 
+              ]
+       }
   }
+
 }
 
 </script>

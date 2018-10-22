@@ -8,7 +8,6 @@
         </div>
         <div class="card-block">
           <slot name="inputs"></slot>
-          <button>Submit</button>
         </div>
       </div>
 
