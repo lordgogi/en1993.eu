@@ -1,22 +1,35 @@
-test:	[
-        {
-          "material": "S355",
-          "type": "rectangle",
-          "coordinates": {
-            "x_1": 14,
-            "y_1": 14,
-            "x_2": 14,
-            "y_2": 14
-          }
-        },
-        {
-          "material": "S355",
-          "type": "rectangle",
-          "coordinates": {
-            "x_1": 14,
-            "y_1": 14,
-            "x_2": 14,
-            "y_2": 14
-          }
-        }
+{
+    "type": "General",
+    "elements": [
+      {
+       "material": "S355",
+       "type": "rectangle",
+       "coordinates": {
+         "x_1": 0,
+         "y_1": this.h,
+         "x_2": this.b,
+         "y_2": this.h-this.t_f
+       }
+     },
+     {
+       "material": "S355",
+       "type": "rectangle",
+       "coordinates": {
+         "x_1": this.b/2-this.t_w/2,
+         "y_1": this.h-this.t_f,
+         "x_2": this.b/2+this.t_w/2,
+         "y_2": this.t_f
+       }
+     },
+      {
+       "material": "S355",
+       "type": "rectangle",
+       "coordinates": {
+         "x_1": 0,
+         "y_1": this.t_f,
+         "x_2": this.b,
+         "y_2": 0
+       }
+     }
     ]
+}
