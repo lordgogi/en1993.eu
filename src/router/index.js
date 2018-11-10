@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import About from '@/components/About'
 import CrossSections from '@/components/CrossSections'
+import I_Shape from '@/components/sections/I_shape.vue'
 
 Vue.use(Router)
 
@@ -22,6 +23,11 @@ export default new Router({
       path: '/',
       name: 'Home',
       component: Home
+    },
+    {
+      path: '/I_Shape',
+      name: 'I_Shape',
+      component: I_Shape
     }
   ],
   mode: 'history'

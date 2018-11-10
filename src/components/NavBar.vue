@@ -3,6 +3,9 @@
 		<span class="nav-link"><router-link to="/">Home</router-link></span>
 		<span class="nav-link"><router-link to="/CrossSections">Cross Sections</router-link></span>
 		<span class="nav-link"><router-link to="/About">About</router-link></span>
+		<span class="nav-link"><router-link to="/I_Shape">I_Shape</router-link></span>
+		<span class="nav-link"><router-link to="/About">About</router-link></span>
+		<span class="nav-link"><router-link to="/About">About</router-link></span>
 	</div>
 </template>
 
@@ -10,16 +13,16 @@
 
 .nav-bar {
 	background-color: #FFFFFF;
-	color: #FFFFFF;
+	color: #565656;
 	height: 40px;
 }
 
 .nav-link {
-		color: #FFFFFF;
+		color: #565656;
 }
 
 .nav-link a {
-	color: #FFFFFF;
+	color: #565656;
 	text-decoration: none;
 	padding: 8px 16px;
 }

@@ -112,59 +112,78 @@ h6 {
   letter-spacing: normal;
 }
 
-* {
-    box-sizing: border-box;
-}
-
-.row::after {
-    content: "";
-    clear: both;
-    display: table;
-}
-
-[class*="col-"] {
-    float: left;
-    padding:4px
 
 
-}
-
-/* For mobile phones: */
-[class*="col-"] {
+.card {
+    border: 1px solid #d7d7d7;
+    border-radius: 0.125rem;
+    box-shadow: 0 0.125rem 0 0 #d7d7d7;
+    background-color: #fff;
+    margin-top: 1rem;
     width: 100%;
-    border-style: dashed;
-    border-width: 0px;
+    display: inline-block;
+    vertical-align: text-top;
 }
-@media only screen and (min-width: 650px) {
-    /* For tablets: */
-    .col-s-0 {width: 8.33%;}
-    .col-s-1 {width: 8.33%;}
-    .col-s-2 {width: 16.66%;}
-    .col-s-3 {width: 25%;}
-    .col-s-4 {width: 33.33%;}
-    .col-s-5 {width: 41.66%;}
-    .col-s-6 {width: 50%;}
-    .col-s-7 {width: 58.33%;}
-    .col-s-8 {width: 66.66%;}
-    .col-s-9 {width: 75%;}
-    .col-s-10 {width: 83.33%;}
-    .col-s-11 {width: 91.66%;}
-    .col-s-12 {width: 100%;}
+
+.card-header {
+  padding: 18px 12px;
+  border-bottom: 1px solid #eee;
 }
-@media only screen and (min-width: 1200px) {
-    /* For desktop: */
-    .col-1 {width: 8.33%;}
-    .col-2 {width: 16.66%;}
-    .col-3 {width: 25%;}
-    .col-4 {width: 33.33%;}
-    .col-5 {width: 41.66%;}
-    .col-6 {width: 50%;}
-    .col-7 {width: 58.33%;}
-    .col-8 {width: 66.66%;}
-    .col-9 {width: 75%;}
-    .col-10 {width: 83.33%;}
-    .col-11 {width: 91.66%;}
-    .col-12 {width: 100%;}
+
+.card-footer {
+  padding: 12px 18px;
+  border-bottom: 1px solid #eee;
 }
+
+.card-block {
+  padding: 12px 18px;
+  border-bottom: 1px solid #eee;
+}
+
+.card-text {
+
+}
+
+.btn {
+  cursor: pointer;
+  border: 1px solid #0079b8;
+  font-weight: 500;
+  border-color: #0079b8;
+  background-color: #0079b8;
+  color: #FFFFFF;
+}
+
+.row {
+
+}
+
+.cont {
+  padding: 50px;
+  display:block;
+  margin: auto;
+}
+
+.form-row {
+  display: block;
+
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.output {
+  display: inline-block;
+  font-family: Metropolis Regular;
+  color: #565656;
+  font-size: 12px;
+  letter-spacing: normal;
+  padding: 3px;
+}
+
+
+
 
 </style>

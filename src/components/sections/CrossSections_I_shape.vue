@@ -40,11 +40,6 @@
 
         </div>
 
-        <div style="display: inline-block; vertical-align: text-top;">
-          <img alt="RHS-section" src="../../assets/legend-i-section.png">
-        </div>
-
-
       </div>
 
 

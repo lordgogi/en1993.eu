@@ -16,7 +16,7 @@
       <p class="p5">p5 Table footers and chart data</p>
 
       <div class="row">
-        <div class="card" style="width: 500px;">
+        <div class="card">
 
           <div class="card-header">
             <h4 style="margin:0px;">John Doe</h4>
@@ -52,7 +52,7 @@
             <button class="btn">Footer Action 1</button>
           </div>
         </div>
-        <div class="card" style="width: 500px;">
+        <div class="card">
 
           <div class="card-header">
             <h4 style="margin:0px;">Inputs:</h4>
@@ -93,7 +93,7 @@
       </div>
 
       <div class="row">
-        <div class="card" style="width: 500px;">
+        <div class="card">
 
           <div class="card-header">
             <h4 style="margin:0px;">John Doe</h4>
