@@ -2,8 +2,8 @@
   <div>
     <CrossSectionsHelper>
 
-      <div slot="title">Cross Section Properties - I-Section</div>
-      <div slot="subtitle">Calculator calculates Cross-Sectional properties - both elastic and plastic of I-Beam Cross-section</div>
+      <div slot="title">Cross Section Properties - RHS-Section</div>
+      <div slot="subtitle">Calculator calculates Cross-Sectional properties - both elastic and plastic of Rectangular Hollow Cross-section</div>
 
       <div slot="inputs">
           <div>
@@ -17,20 +17,20 @@
             <div class="input-label">{{units}}</div>
           </div>
           <div>
-            <div class="input-label-50px">t<sub>w</sub>:</div>
-            <input class="output" type="number" min="0" v-model="t_w" style="width: 100px; display: inline-block"></input>
+            <div class="input-label-50px">t<sub>h</sub>:</div>
+            <input class="output" type="number" min="0" v-model="t_h" style="width: 100px; display: inline-block"></input>
             <div class="input-label">{{units}}</div>
           </div>
           <div>
-            <div class="input-label-50px">t<sub>f</sub>:</div>
-            <input class="output" type="number" min="0" v-model="t_f" style="width: 100px; display: inline-block"></input>
+            <div class="input-label-50px">t<sub>b</sub>:</div>
+            <input class="output" type="number" min="0" v-model="t_b" style="width: 100px; display: inline-block"></input>
             <div class="input-label">{{units}}</div>
           </div>
           <button v-on:click="submitBasic">Submit</button>
       </div>
 
       <div slot="picture">
-        <img alt="Cross Section I-beam" src="../../assets/legend-i-section.png">
+        <img alt="Cross Section I-beam" src="../../assets/legend-rhs.png">
       </div>
 
 
@@ -54,7 +54,7 @@ import axios from 'axios'
 import { API_path } from '../../variables.js'
 
 export default{
-  name: 'I_shape',
+  name: 'rhsShape',
   components:{
     'CrossSectionsHelper': CrossSectionsHelper,
   },
@@ -62,8 +62,8 @@ export default{
     return{
       b:200,
       h:400,
-      t_w:8,
-      t_f:12,
+      t_h:8,
+      t_b:12,
       result:'',
       units:'mm',
       submited:false,
@@ -81,11 +81,11 @@ export default{
        },
        getJSON : function(){
           return {
-              "type": "I-shape",
+              "type": "rhs-shape",
               "h": this.h,
               "b": this.b,
-              "t_f": this.t_f,
-              "t_w": this.t_w
+              "t_h": this.t_h,
+              "t_b": this.t_b
           }
        }
   },

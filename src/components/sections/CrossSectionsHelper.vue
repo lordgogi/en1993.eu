@@ -1,15 +1,19 @@
 <template>
   <div>
 
-    <row>
-      <div class="col-12 col-s-12">Insert Navigation Here</div>
-    </row>
+    <div class="row">
+      <div class="col-12 col-s-12"><SectionsNavBar></SectionsNavBar></div>
+    </div>
 
-    <row>
+    <div class="row">
       <div class="col-12 col-s-12" style="text-align: center"><h1><slot name="title"></slot></h1></div>
-    </row>
+    </div>
 
-    <row>
+    <div class="row">
+      <div class="col-12 col-s-12" style="text-align: center"><p class="p1>"<slot name="subtitle"></slot></p></div>
+    </div>
+
+    <div class="row">
 
       <div class="col-2 col-s-1"></div>
 
@@ -30,10 +34,21 @@
 
       <div class="col-2 col-s-1"></div>
 
-    </row>
+    </div>
 
   </div>
 </template>
+
+<script>
+import SectionsNavBar from './SectionsNavBar.vue';
+
+export default{
+  components:{
+    'SectionsNavBar': SectionsNavBar,
+  },
+}
+
+</script>
 
 <style>
 

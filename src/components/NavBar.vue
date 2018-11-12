@@ -1,10 +1,7 @@
 <template>
 	<div class="nav-bar">
 		<span class="nav-link"><router-link to="/">Home</router-link></span>
-		<span class="nav-link"><router-link to="/CrossSections">Cross Sections</router-link></span>
-		<span class="nav-link"><router-link to="/About">About</router-link></span>
-		<span class="nav-link"><router-link to="/I_Shape">I_Shape</router-link></span>
-		<span class="nav-link"><router-link to="/About">About</router-link></span>
+		<span class="nav-link"><router-link to="/I_Shape">Cross Sections</router-link></span>
 		<span class="nav-link"><router-link to="/About">About</router-link></span>
 	</div>
 </template>

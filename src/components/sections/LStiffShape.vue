@@ -2,8 +2,8 @@
   <div>
     <CrossSectionsHelper>
 
-      <div slot="title">Cross Section Properties - I-Section</div>
-      <div slot="subtitle">Calculator calculates Cross-Sectional properties - both elastic and plastic of I-Beam Cross-section</div>
+      <div slot="title">Cross Section Properties - L-profile stiffened plate-Section</div>
+      <div slot="subtitle">Calculator calculates Cross-Sectional properties - both elastic and plastic of Plate stiffenned with L-profile</div>
 
       <div slot="inputs">
           <div>
@@ -17,8 +17,18 @@
             <div class="input-label">{{units}}</div>
           </div>
           <div>
-            <div class="input-label-50px">t<sub>w</sub>:</div>
-            <input class="output" type="number" min="0" v-model="t_w" style="width: 100px; display: inline-block"></input>
+            <div class="input-label-50px">f:</div>
+            <input class="output" type="number" min="0" v-model="f" style="width: 100px; display: inline-block"></input>
+            <div class="input-label">{{units}}</div>
+          </div>
+          <div>
+            <div class="input-label-50px">t<sub>b</sub>:</div>
+            <input class="output" type="number" min="0" v-model="t_b" style="width: 100px; display: inline-block"></input>
+            <div class="input-label">{{units}}</div>
+          </div>
+          <div>
+            <div class="input-label-50px">t<sub>h</sub>:</div>
+            <input class="output" type="number" min="0" v-model="t_h" style="width: 100px; display: inline-block"></input>
             <div class="input-label">{{units}}</div>
           </div>
           <div>
@@ -30,7 +40,7 @@
       </div>
 
       <div slot="picture">
-        <img alt="Cross Section I-beam" src="../../assets/legend-i-section.png">
+        <img alt="Cross Section I-beam" src="../../assets/legend-l-stiff.png">
       </div>
 
 
@@ -54,16 +64,18 @@ import axios from 'axios'
 import { API_path } from '../../variables.js'
 
 export default{
-  name: 'I_shape',
+  name: 'LStiffShape',
   components:{
     'CrossSectionsHelper': CrossSectionsHelper,
   },
   data(){
     return{
-      b:200,
-      h:400,
-      t_w:8,
-      t_f:12,
+      b:400,
+      h:150,
+      f:100,
+      t_b:5,
+      t_h:10,
+      t_f:8,
       result:'',
       units:'mm',
       submited:false,
@@ -81,11 +93,13 @@ export default{
        },
        getJSON : function(){
           return {
-              "type": "I-shape",
-              "h": this.h,
+              "type": "l-stiff-shape",
               "b": this.b,
+              "h": this.h,
+              "f": this.f,
+              "t_b": this.t_b,
+              "t_h": this.t_h,
               "t_f": this.t_f,
-              "t_w": this.t_w
           }
        }
   },

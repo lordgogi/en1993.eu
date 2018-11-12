@@ -4,6 +4,8 @@ import Home from '@/components/Home'
 import About from '@/components/About'
 import CrossSections from '@/components/CrossSections'
 import I_Shape from '@/components/sections/I_shape.vue'
+import rhsShape from '@/components/sections/rhsShape.vue'
+import LStiffShape from '@/components/sections/LStiffShape.vue'
 
 Vue.use(Router)
 
@@ -28,6 +30,16 @@ export default new Router({
       path: '/I_Shape',
       name: 'I_Shape',
       component: I_Shape
+    },
+    {
+      path: '/rhsShape',
+      name: 'rhsShape',
+      component: rhsShape
+    },
+    {
+      path: '/LStiffShape',
+      name: 'LStiffShape',
+      component: LStiffShape
     }
   ],
   mode: 'history'

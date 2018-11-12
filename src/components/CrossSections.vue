@@ -13,13 +13,13 @@
 
 <script>
 import CrossSections_I_shape from './sections/CrossSections_I_shape';
-import CrossSections_rhs from './sections/CrossSections_rhs';
+
 
 export default {
   name: 'CrossSections',
   components: {
     'CrossSections_I_shape': CrossSections_I_shape,
-    'CrossSections_rhs': CrossSections_rhs,
+
   },
   data () {
     return {

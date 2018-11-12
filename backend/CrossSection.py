@@ -175,6 +175,24 @@ class i_section(cross_section):
         self._shapes.append(square([-t_w/2,(h/2)-t_f],[t_w/2,(-h/2)+t_f]))
         self._shapes.append(square([-b/2,(-h/2)+t_f],[b/2,-h/2]))
 
+class rhs_section(cross_section):
+
+    def __init__(self,h,b,t_h,t_b):
+        self._shapes = []
+        self._shapes.append(square([-b/2,h/2],[b/2,(h/2)-t_h]))
+        self._shapes.append(square([-b/2,(h/2)-t_h],[(-b/2)+t_b,(-h/2)+t_h]))
+        self._shapes.append(square([(b/2)-t_b,(h/2)-t_h],[b/2,-(h/2)+t_h]))
+        self._shapes.append(square([(-b/2),(-h/2)+t_h],[b/2,-(h/2)]))
+
+class l_stiff_section(cross_section):
+
+    def __init__(self,b,h,f,t_b,t_h,t_f):
+        self._shapes = []
+        self._shapes.append(square([-t_h/2,h+t_b],[f-t_h/2,t_b+h-t_f]))
+        self._shapes.append(square([-t_h/2,h+t_b-t_f],[t_h/2,t_b]))
+        self._shapes.append(square([-b/2,t_b],[b/2,0]))
+
+
 def testik(data):
 
     if data['type'] == "General":   # This option uses default constructor filled with shapes as arguments ------------------ Fix this so it does not have to do the fucking for loop you moron
@@ -187,6 +205,12 @@ def testik(data):
 
     elif data['type'] == "I-shape": # This option uses class method as alternative constructor - used For I-beams
         section = i_section(float(data['h']),float(data['b']),float(data['t_f']),float(data['t_w']))
+
+    elif data['type'] == "rhs-shape": # This option uses class method as alternative constructor - used For RHS-beams
+        section = rhs_section(float(data['h']),float(data['b']),float(data['t_h']),float(data['t_b']))
+
+    elif data['type'] == "l-stiff-shape": # This option uses class method as alternative constructor - used For plate stiffenned with L-profile
+        section = l_stiff_section(float(data['b']),float(data['h']),float(data['f']),float(data['t_b']),float(data['t_h']),float(data['t_f']))
 
     for item in section.return_basic_results():
         print(item)
