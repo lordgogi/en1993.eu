@@ -8,6 +8,9 @@ class square:
         self._x2 = float(point2[0])
         self._y2 = float(point2[1])
 
+    def get_points(self):
+        return [(self._x1,self._y1),(self._x2,self._y2)]
+
     def get_outmost_y(self):
         return [self._x1,self._x2]
 
@@ -98,15 +101,33 @@ class cross_section:
     def get_moments_of_inertia(self):   #   Carefull here - dont mix up the axes
         return(self.get_sum_moments_of_inertia()[0] + self.get_second_moment_area()[1], self.get_sum_moments_of_inertia()[1] + self.get_second_moment_area()[0])
 
+    def get_furthest_point(self):
+
+        z_max_distance = 0
+        y_max_distance = 0
+
+        for i in self._shapes:
+
+            y_max = max(abs(i.get_points()[0][0]-self.get_centroid_origin()[0]),abs(i.get_points()[1][0]-self.get_centroid_origin()[0]))
+            z_max = max(abs(i.get_points()[0][1]-self.get_centroid_origin()[1]),abs(i.get_points()[1][1]-self.get_centroid_origin()[1]))
+
+            if z_max > z_max_distance:
+                z_max_distance = z_max
+
+            if y_max > y_max_distance:
+                y_max_distance = y_max
+
+        return (z_max_distance, y_max_distance)
+
+
     def get_section_modulus(self):
 
         z_max_distance = 0
         y_max_distance = 0
 
         for i in self._shapes:
-            z_max = max(abs(i.get_outmost_z()[0]-self.get_centroid_origin()[1]),abs(i.get_outmost_z()[1]-self.get_centroid_origin()[1]))
-            y_max = max(abs(i.get_outmost_y()[0]-self.get_centroid_origin()[0]),abs(i.get_outmost_y()[1]-self.get_centroid_origin()[0]))
-
+            z_max = max(abs(i.get_points()[0][1]-self.get_centroid_origin()[1]),abs(i.get_points()[1][1]-self.get_centroid_origin()[1]))
+            y_max = max(abs(i.get_points()[0][0]-self.get_centroid_origin()[0]),abs(i.get_points()[1][0]-self.get_centroid_origin()[0]))
             if z_max > z_max_distance:
                 z_max_distance = z_max
 
@@ -237,12 +258,6 @@ class u_section(cross_section):
         self._shapes.append(square([-b/2,t_h],[b/2,0]))
         self._shapes.append(square([(b/2)-t_b,h],[b/2,t_h]))
 
-class chs_section(cross_section):
-
-    def __init__(self,r_o,r_i):
-        self._shapes = []
-        self._shapes.append(annulus([0,0],r_o,r_i))
-
 
 def testik(data):
 
@@ -275,9 +290,6 @@ def testik(data):
     elif data['type'] == "u-shape": # This option uses class method as alternative constructor - used For plate stiffenned bar
         section = u_section(float(data['b']),float(data['h']),float(data['t_b']),float(data['t_h']))
 
-    elif data['type'] == "chs-shape": # This option uses class method as alternative constructor - used For plate stiffenned bar
-        section = chs_section(float(data['r_o']),float(data['r_i']))
-
     for item in section.return_basic_results():
         print(item)
 
@@ -296,7 +308,7 @@ if __name__ == '__main__':
     print('##############################################################################')
 
     for item in section._shapes:
-
+        print("Points: " + str(item.get_points()))
         print('Area of item is: '+ str(item.get_area()))
         print('Centroid of item towards origin: '+ str(item.get_centroid_origin()))
         print('First Moment of Area of item towards origin: '+ str(item.get_first_moment_area()))
@@ -316,7 +328,7 @@ if __name__ == '__main__':
     section2 = i_section(400,200,12,8)
 
     for item in section2._shapes:
-
+        print("Points: " + str(item.get_points()))
         print('Area of item is: '+ str(item.get_area()))
         print('Centroid of item towards origin: '+ str(item.get_centroid_origin()))
         print('First Moment of Area of item towards origin: '+ str(item.get_first_moment_area()))

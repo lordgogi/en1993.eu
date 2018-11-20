@@ -79,7 +79,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       // Absolute path to compiled SPA
       path.resolve(__dirname, '../dist'),
       // List of routes to prerender
-      [ '/', '/About', '/I_Shape' ],
+      [ '/', '/About', '/I_Shape', '/rhsShape', '/LStiffShape', '/PlateStiffShape', '/TStiffShape', '/LShape', '/UShape', '/CHSShape' ],
       {
         // Options
       }
