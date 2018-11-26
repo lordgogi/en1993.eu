@@ -137,12 +137,12 @@ h6 {
 }
 @media only screen and (min-width: 650px) {
     /* For tablets: */
-    .col-s-0 {width: 8.33%;}
+    .col-s-0 {width: 0%;}
     .col-s-1 {width: 8.33%;}
     .col-s-2 {width: 16.66%;}
     .col-s-3 {width: 25%;}
     .col-s-4 {width: 33.33%;}
-    .col-s-5 {width: 41.66%;}
+    .col-s-5 {width: 49%;}
     .col-s-6 {width: 50%;}
     .col-s-7 {width: 58.33%;}
     .col-s-8 {width: 66.66%;}

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
-import About from '@/components/About'
+import BoltInLine from '@/components/BoltInLine'
 import I_Shape from '@/components/sections/I_shape.vue'
 import rhsShape from '@/components/sections/rhsShape.vue'
 import LStiffShape from '@/components/sections/LStiffShape.vue'
@@ -16,9 +16,9 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/About',
-      name: 'About',
-      component: About
+      path: '/BoltInLine',
+      name: 'BoltInLine',
+      component: BoltInLine
     },
     {
       path: '/',
