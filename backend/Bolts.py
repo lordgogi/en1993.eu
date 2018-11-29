@@ -1,4 +1,5 @@
 import math
+import pprint
 
 Bolts = {
     'M12':{'Diameter':12},
@@ -25,11 +26,13 @@ class boltEN:
     def __init__(self, size=None, grade=None, x=None, y=None):
         self._x = x
         self._y = y
+        self._grade = grade
+        self._size = size
         self._Fx_primary = None # Will get defined in Bolt pattern __init__
         self._Fy_primary = None # Will get defined in Bolt pattern __init__
         self._F_secondary = None # Will get defined in Bolt pattern __init__
-        self._grade = grade
-        self._size = size
+        self._Fx_secondary = None # Will get defined in Bolt pattern __init__
+        self._Fy_secondary = None # Will get defined in Bolt pattern __init__
         self._diameter = Bolts[size]['Diameter']
         self._quadrant = None # This specifies quadrand of bolt towards centroid - will get defined in Bolt pattern __init__
         self._bolt_angle = None # Will get defined in Bolt pattern __init__
@@ -52,6 +55,18 @@ class boltEN:
     def get_Fy_primary(self):
         return self._Fy_primary
 
+    def get_Fx_secondary(self):
+        return self._Fx_secondary
+
+    def get_Fx_total(self):
+        return self._Fx_primary + self._Fx_secondary
+
+    def get_Fy_total(self):
+        return self._Fy_primary + self._Fy_secondary
+
+    def get_Fy_secondary(self):
+        return self._Fy_secondary
+
     def get_F_secondary(self):
         return self._F_secondary
 
@@ -70,10 +85,7 @@ class boltEN:
     def set_distance_from_centroid(self,centroid):
         self._distance_from_centroid = math.sqrt(math.pow(abs(self._x-centroid[0]),2)+math.pow(abs(self._y-centroid[1]),2))
 
-    def get_bolt_angle(self):
-        return self._bolt_angle
-
-    def set_bolt_angle(self,centroid,moment):
+    def set_F_secondaryXY(self,centroid,moment):
         angle = math.atan(abs(self._y-centroid[1])/abs(self._x-centroid[0]))
         if self._x >= centroid[0] and self._y >= centroid[1]:
             F_x_secondary = self._F_secondary*math.sin(angle)
@@ -87,7 +99,8 @@ class boltEN:
         else:
             F_x_secondary = self._F_secondary*math.sin(angle)
             F_y_secondary = self._F_secondary*math.cos(angle)
-        self._bolt_angle = (F_x_secondary, F_y_secondary)
+        self._Fx_secondary = F_x_secondary
+        self._Fy_secondary = F_y_secondary
 
 class boltPattern:
 
@@ -100,15 +113,15 @@ class boltPattern:
         self._total_Fy_primary = self.get_total_Fy()
 
         for item in self._bolts:
-            item.set_Fx_primary(self._total_Fx_primary/4)
-            item.set_Fy_primary(self._total_Fy_primary/4)
+            item.set_Fx_primary(self._total_Fx_primary/len(self._bolts))
+            item.set_Fy_primary(self._total_Fy_primary/len(self._bolts))
             item.set_distance_from_centroid(self._centroid)
 
         self._total_square_distances = self.get_total_square_distances()
 
         for item in self._bolts:
             item.set_F_secondary(self._total_moment*item.get_distance_from_centroid()/self._total_square_distances)
-            item.set_bolt_angle(self._centroid,self._total_moment)
+            item.set_F_secondaryXY(self._centroid,self._total_moment)
 
 
 
@@ -162,71 +175,37 @@ class boltPattern:
         return total_Fy
 
     def return_results(self):
-        results=[
-        [
-            {
-                'label': 'C',
-                'label_sub': 'x',
-                'value': self._centroid[0],
-                'unit': 'mm',
-                'unit_pow': '',
-                'description': 'Location of centroid in X'
-            },
-            {
-                'label': 'C',
-                'label_sub': 'y',
-                'value': self._centroid[1],
-                'unit': 'mm',
-                'unit_pow': '',
-                'description': 'Location of centroid in Y'
-            },
-            {
-                'label': 'M',
-                'label_sub': 'eq',
-                'value': self._total_moment,
-                'unit': 'Nmm',
-                'unit_pow': '',
-                'description': 'Equivalent Moment'
-            },
-            {
-                'label': 'F',
-                'label_sub': 'x, primary',
-                'value': self._total_Fx_primary,
-                'unit': 'N',
-                'unit_pow': '',
-                'description': 'Primary shear Force in X'
-            },
-            {
-                'label': 'F',
-                'label_sub': 'y, primary',
-                'value': self._total_Fy_primary,
-                'unit': 'N',
-                'unit_pow': '',
-                'description': 'Primary shear Force in Y'
-            },
-        ],
-        [
-        ]
-        ]
+        results={
+        'centroid_x':round(self.get_centroid()[0],2),
+        'centroid_y':round(self.get_centroid()[1],2),
+        'total_moment':round(self.get_total_moment(),2),
+        'total_Fx_prim':round(self.get_total_Fx(),2),
+        'total_Fy_prim':round(self.get_total_Fy(),2),
+
+
+        'bolts':[]
+        }
 
         for bolt in self._bolts:
-            results[1].append(
+            results['bolts'].append(
             {
-                'label': 'F',
-                'label_sub': 'x, primary',
-                'value': bolt.get_Fx_primary(),
-                'unit': 'N',
-                'unit_pow': '',
-                'description': 'Primary shear Force in X'
-            },
-            {
-                'label': 'F',
-                'label_sub': 'y, primary',
-                'value': bolt.get_Fy_primary(),
-                'unit': 'N',
-                'unit_pow': '',
-                'description': 'Primary shear Force in Y'
-            },
+                'bolt_ID': 0,
+                'bolt_x': round(bolt.get_x(),2),
+                'bolt_y': round(bolt.get_y(),2),
+                'bolt_Fx_prim': round(bolt.get_Fx_primary(),2),
+                'bolt_Fy_prim': round(bolt.get_Fy_primary(),2),
+                'bolt_Fx_sec': round(bolt.get_Fx_secondary(),2),
+                'bolt_Fy_sec': round(bolt.get_Fy_secondary(),2),
+                'bolt_Fx_total': round(bolt.get_Fx_total(),2),
+                'bolt_Fy_total': round(bolt.get_Fy_total(),2),
+                'results':[
+                {
+                    'csdcsdcsdc':1651,
+                    'sdcsdc':135131
+                }
+
+                ]
+            }
             )
 
         return results
@@ -252,13 +231,38 @@ class Force:
         return self._magnitude*math.cos(math.radians(self._angle))
 
     def get_F_y(self):
-        return self._magnitude*math.sin(math.radians(self._angle))
+        return -self._magnitude*math.sin(math.radians(self._angle))
 
     def get_eq_moment(self,centroid):
         point1 = (self.get_x(),self.get_y())
         point2 = (self.get_x()+self.get_F_x(),self.get_y()+self.get_F_y())
         distance = distance_point_line(point1, point2, centroid)
-        return distance*self.get_F()
+
+        if point1[0] >= centroid[0] and point1[1] >= centroid[1]:   # Force origin is in Quadrant I
+            M_x_cont = self.get_F_x()*(abs(point1[1]-centroid[1]))
+            M_y_cont = -self.get_F_y()*(abs(point1[0]-centroid[0]))
+            print("Quadrant I")
+
+        elif point1[0] >= centroid[0] and point1[1] < centroid[1]:   # Force origin is in Quadrant II
+            M_x_cont = -self.get_F_x()*(abs(point1[1]-centroid[1]))
+            M_y_cont = -self.get_F_y()*(abs(point1[0]-centroid[0]))
+            print("Quadrant II")
+
+        elif point1[0] < centroid[0] and point1[1] <= centroid[1]:   # Force origin is in Quadrant III
+            M_x_cont = -self.get_F_x()*(abs(point1[1]-centroid[1]))
+            M_y_cont = self.get_F_y()*(abs(point1[0]-centroid[0]))
+            print("Quadrant III")
+
+        elif point1[0] < centroid[0] and point1[1] > centroid[1]:   # Force origin is in Quadrant IV
+            M_x_cont = self.get_F_x()*(abs(point1[1]-centroid[1]))
+            M_y_cont = self.get_F_y()*(abs(point1[0]-centroid[0]))
+            print("Quadrant IV")
+
+
+        if M_x_cont+M_y_cont >= 0:
+            return distance*self.get_F()
+        else:
+            return -distance*self.get_F()
 
 class Moment:
 
@@ -282,20 +286,5 @@ if __name__ == '__main__':
 
     pattern = boltPattern([bolt1, bolt2, bolt3, bolt4],[force1,moment1])
 
-
-
-    print('Bolt pattern Centroid:' , pattern.get_centroid())
-    print('Bolt pattern total Moment:' , pattern.get_total_moment())
-    print('Bolt pattern total Force in X:' , pattern.get_total_Fx())
-    print('Bolt pattern total Force in Y:' , pattern.get_total_Fy())
-
-
-
-    for item in pattern._bolts:
-        print('-----------------------------------')
-        print('Daimeter: ',item.get_diameter())
-        print('Fx primary: ',item.get_Fx_primary())
-        print('Fy primary: ',item.get_Fy_primary())
-        print('Distance to Centroid: ',item.get_distance_from_centroid())
-        print('F secondary: ',item.get_F_secondary())
-        print('Bolt Angle: ',item.get_bolt_angle())
+    #pp = pprint.PrettyPrinter(indent=4)
+    #pp.pprint(pattern.return_results())

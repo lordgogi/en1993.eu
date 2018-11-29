@@ -8,12 +8,18 @@ EN-1993 is a set of tools, scrips and API's built to help Mechanical Engineers a
 
 Website is build in Vue and API is build with Flask
 
-If you have questions, comments or want to contribute please let me know at:
+If you have questions, comments or want to contribute please contact me at:
 info@en1993.eu
 
 so far following is implemented:
 ### Cross-section properties calculator for common shapes
+  Visit the Calculator: [http://www.en1993.eu/I_Shape](http://www.en1993.eu/I_Shape "Visit the site")
+
+  Set of Calculators aimed at calculation of elastic and plastic Cross-Section properties
   ![alt text](./markdown_assets/cross_section.png "Cross Section Calculator for Common SHpaes ")
+
+### Bolt pattern In-plane loading Calculator
+  Visit the Calculator: [http://www.en1993.eu/BoltInLine](http://www.en1993.eu/BoltInLine "Visit the site")
 
 ### Run locally
 

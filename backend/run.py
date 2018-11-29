@@ -29,7 +29,7 @@ class GetBoltInlineResults(Resource):
         req_data = request.get_json()
 
         for item in req_data['bolts']:
-            bolts.append(boltEN(size=item['type'], grade=item['grade'], x=item['x'], y=item['y']))
+            bolts.append(boltEN(size=req_data['size'], grade=req_data['grade'], x=item['x'], y=item['y']))
 
         for item in req_data['loads']:
             if item['type'] == 'force':
@@ -42,6 +42,9 @@ api.add_resource(HelloWorld,"/")
 api.add_resource(JsonExample,"/json-example")
 api.add_resource(GetBoltOptions,"/get-bolt-options")
 api.add_resource(GetBoltInlineResults,"/get-bolt-inline-result")
+
+#if __name__ == '__main__':
+#    app.run(debug=False, ssl_context='adhoc')
 
 if __name__ == '__main__':
     app.run(debug=True)

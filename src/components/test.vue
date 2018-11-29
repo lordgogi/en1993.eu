@@ -1,47 +1,39 @@
-<button type="button" v-on:click="addNewApartment">
-    Add +
-</button>
+<template>
+  <div>
+    <button v-on:click="funcion1">Fit All</button>
+    <svg  width="1000" height="600" id="uhlo" style="background: #808080">
+      <text class="label" id="country-name" x="10" y="390"> </text>
+    </svg>
+  </div>
+</template>
 
+<script>
 
+export default{
+  name: 'test',
+  components:{
 
-<div v-for="(apartment, index) in apartments">
+  },
+  data(){
+    return{
+      bolt_sizes:"M16",
+    }
+  },
 
-            <input v-model="apartment.price" name="apartments[][price]">
+  methods:{
 
-            <input v-model="apartment.rooms" name="apartments[][rooms]">
+    funcion1(){
+      document.getElementById('uhlo').getElementById('country-name').firstChild.data = "sdcsdc";
+    }
 
-            <button type="button" v-on:click="removeApartment(index)"> Remove </button>
+  },
 
-</div>
+  computed:{
 
-
-
-
-  data: {
-    apartment: {
-      price: '',
-      rooms: ''
-    },
-    apartments: [],
   },
 
 
 
+}
 
-  methods:
-  {
-
-
-    addNewApartment: function () {
-      this.apartments.push(Vue.util.extend({}, this.apartment))
-    },
-
-
-
-    removeApartment: function (index) {
-      Vue.delete(this.apartments, index);
-    },
-
-
-  }
-})
+</script>

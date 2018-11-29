@@ -10,11 +10,17 @@ import TStiffShape from '@/components/sections/TStiffShape.vue'
 import LShape from '@/components/sections/LShape.vue'
 import UShape from '@/components/sections/UShape.vue'
 import CHSShape from '@/components/sections/CHSShape.vue'
+import test from '@/components/test.vue'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
+    {
+      path: '/test',
+      name: 'test',
+      component: test
+    },
     {
       path: '/BoltInLine',
       name: 'BoltInLine',
