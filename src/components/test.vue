@@ -1,39 +1,44 @@
 <template>
-  <div>
-    <button v-on:click="funcion1">Fit All</button>
-    <svg  width="1000" height="600" id="uhlo" style="background: #808080">
-      <text class="label" id="country-name" x="10" y="390"> </text>
-    </svg>
+  <div id="app">
+
+
+    <SvgGraph
+      :width="750"
+      :height="450"
+      :circlePos=circles_pos
+    />
+
   </div>
 </template>
 
 <script>
-
-export default{
-  name: 'test',
-  components:{
-
-  },
+import SvgGraph from './SvgGraph'
+export default {
+  name: 'App',
   data(){
     return{
-      bolt_sizes:"M16",
+      circles_pos:[
+      {
+        "x":0,
+        "y":75,
+        "label":"Bolt 1"
+      },
+      {
+        "x":100,
+        "y":95,
+        "label":"Bolt 2"
+      },
+      {
+        "x":200,
+        "y":115,
+        "label":"Bolt 3"
+      }
+      ]
     }
-  },
-
-  methods:{
-
-    funcion1(){
-      document.getElementById('uhlo').getElementById('country-name').firstChild.data = "sdcsdc";
-    }
 
   },
-
-  computed:{
-
-  },
-
-
-
+  components: {
+    SvgGraph
+  }
 }
-
 </script>
