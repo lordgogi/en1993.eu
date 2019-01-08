@@ -43,7 +43,7 @@
 
 
           <div v-for="(bolt, index) in bolts">
-            <div class="input-label-50px" style="text-align:center">{{index}}</div>
+            <div class="input-label-50px" style="text-align:center">{{bolt.id}}</div>
             <div class="input-label-100px" ><input v-model.number="bolt.x" style="max-width: 100px" type="number"></div>
             <div class="input-label-100px"><input v-model.number="bolt.y" style="max-width: 100px" type="number"></div>
             <button class="button_del" type="button" v-on:click="removeBolt(index)"> delete </button>
@@ -79,6 +79,7 @@
         <div class="card">
 
           <h4>RESULTS</h4>
+          {{bolt_radius}}
 
           <div class="input-label-100px">C<sub>x</sub>:</div> <div class="input-label-100px">{{result.centroid_x}}</div>  <div class="input-label-50px">mm</div> <div class="input-label"> Centroid position in X</div><br>
           <div class="input-label-100px">C<sub>y</sub>:</div> <div class="input-label-100px">{{result.centroid_y}}</div>  <div class="input-label-50px">mm</div> <div class="input-label"> Centroid position in Y</div><br>
@@ -101,62 +102,68 @@
 
       </div>
 
-      <!-- VIEWPORT  -->
+      <!-- SVG  -->
 
       <div class="col-6 col-s-5">
         <div class="card">
+          Show Primary shear:<input type="checkbox" id="checkbox_primary" v-model="shown_primary_shear">
+          Show Secondary shear:<input type="checkbox" id="checkbox_secondary" v-model="shown_secondary_shear">
+          Show Total shear:<input type="checkbox" id="checkbox_total" v-model="shown_total_shear">
 
-          <p class="p5">
+            <SvgGraph
 
-            <input type="checkbox" id="primary_total" v-model="primary_total" style="width:auto">
-            <label for="primary_total">Show Primary Shear</label>
-            <input type="checkbox" id="secondary_total" v-model="secondary_total" style="width:auto">
-            <label for="secondary_total">Show Secondary Shear</label>
-            <input type="checkbox" id="total" v-model="total" style="width:auto">
-            <label for="total">Show Total Shear</label>
-            <button v-on:click="zoomIn">+ Zoom In</button>
-            <button v-on:click="zoomOut">- Zoom Out</button>
-            <button v-on:click="viewboxFitAll">Fit All</button>
+              :height="450"
 
+              :elements="[
+                {
+                  items:this.bolts,
+                  type:'circles',
+                  color:'black',
+                  radius:this.bolt_radius,
+                  shown:true
+                },
+                {
+                  items:this.bolts,
+                  type:'labels',
+                  shown:true
+                },
+                {
+                  items:this.result.bolts,
+                  type:'arrows_inline_prim',
+                  shown:this.shown_primary_shear,
+                  scale:this.forces_scale
+                },
+                {
+                  items:this.result.bolts,
+                  type:'arrows_inline_sec',
+                  shown:this.shown_secondary_shear,
+                  scale:this.forces_scale
+                },
+                {
+                  items:this.result.bolts,
+                  type:'arrows_inline_tot',
+                  shown:this.shown_total_shear,
+                  scale:this.forces_scale
+                },
+                {
+                  items:this.loads,
+                  type:'arrows',
+                  shown:true,
+                  scale:this.forces_scale
+                },
+                {
+                  items:this.centroid_pos,
+                  type:'circles',
+                  color:'blue',
+                  radius:2,
+                  shown:true
+                  }
+                ]"
+
+              :coordinate_sys="true"
+            />
 
         </p>
-
-          <!-- SVG VIEWPORT -->
-
-          <svg  width="100%" height="600" v-bind:viewBox="viewPort" style="background: #ffffff"><!-- transform-origin: 50% 50%; transform: scale(1,-1); -->
-            <defs>
-              <!-- arrowhead marker definition -->
-              <marker id="arrow_CS" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse" :fill="colors.coordinate_system">
-                <path d="M 0 0 L 10 5 L 0 10 z" />
-              </marker>
-              <marker id="arrow_Force" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse" :fill="colors.force">
-                <path d="M 0 0 L 10 5 L 0 10 z" />
-              </marker>
-              <marker id="arrow_Primary" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse" :fill="colors.primary">
-                <path d="M 0 0 L 10 5 L 0 10 z" />
-              </marker>
-              <marker id="arrow_Secondary" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse" :fill="colors.secondary">
-                <path d="M 0 0 L 10 5 L 0 10 z" />
-              </marker>
-            </defs>
-
-            <circle v-for="(item, index) in bolts" :cx="item.x" :cy="item.y" :r="16"/>
-            <path class="button" onclick="pan(0, 25)" d="M25 5 l6 10 a20 35 0 0 0 -12 0z" />
-            <circle v-if="result['centroid_x']":cx="result['centroid_x']" :cy="result['centroid_y']" :r="5"/>
-            <!-- Input Forces -->
-            <line v-for="(item, index) in loads" :x1="item.x" :y1="item.y" :x2="item.x+item.magnitude*Math.cos(item.angle*(Math.PI/180))*0.1" :y2="item.y-item.magnitude*Math.sin(item.angle*(Math.PI/180))*0.1" marker-end="url(#arrow_Force)" :stroke="colors.force"/>
-            <!-- Primary and secondary Forces -->
-            <line v-if="primary_total" v-for="(item, index) in result['bolts']" :x1="item['bolt_x']" :y1="item['bolt_y']" :x2="item['bolt_x'] - item['bolt_Fx_prim']*0.1" :y2="item['bolt_y'] - item['bolt_Fy_prim']*0.1" marker-end="url(#arrow_Primary)" :stroke="colors.primary" stroke-dasharray="4" />
-            <line v-if="secondary_total" v-for="(item, index) in result['bolts']" :x1="item['bolt_x']" :y1="item['bolt_y']" :x2="item['bolt_x'] - item['bolt_Fx_sec']*0.1" :y2="item['bolt_y'] - item['bolt_Fy_sec']*0.1" marker-end="url(#arrow_Secondary)" :stroke="colors.secondary" stroke-dasharray="4" />
-            <!-- Total Shear Force Forces -->
-            <line v-if="total" v-for="(item, index) in result['bolts']" :x1="item['bolt_x']" :y1="item['bolt_y']" :x2="item['bolt_x'] - item['bolt_Fx_total']*0.1" :y2="item['bolt_y'] - item['bolt_Fy_total']*0.1" marker-end="url(#arrow_Primary)" :stroke="colors.primary" />
-            <!-- Coordinate system Render -->
-            <polyline points="10,90 10,10 90,10" fill="none" :stroke="colors.coordinate_system" marker-start="url(#arrow_CS)" marker-end="url(#arrow_CS)"  />
-            <text x="0" y="0" class="small">0</text>
-            <text x="90" y="0" class="small">X</text>
-            <text x="0" y="90" class="small">Y</text>
-          </svg>
-
        </div>
       </div>
 
@@ -170,6 +177,7 @@
 <script>
 import axios from 'axios'
 import { API_path } from '../variables.js'
+import SvgGraph from './SvgGraph'
 
 export default{
   name: 'BoltInLine',
@@ -180,46 +188,46 @@ export default{
     return{
       bolt_sizes:["M16", "M20"],
       bolt_grades:["8.8", "10.9"],
-      viewPort:[-200,-200,400,400],
       selected_bolt_type:"M12",
       selected_bolt_grade:"8.8",
-      colors:{
-        "coordinate_system":"black",
-        "force":"red",
-        "primary":"gray",
-        "secondary":"gray"
-      },
-      zoom:1,
       result:"",
+      shown_primary_shear:true,
+      shown_secondary_shear:true,
+      shown_total_shear:true,
       primary_total:"false",
       secondary_total:"false",
       total:"false",
       bolts:[
         {
-        x:-50,
-        y:50,
-
-      },
-      {
-        x:-50,
-        y:-50,
-      },
-      {
-        x:50,
-        y:50,
-      },
-      {
-        x:50,
-        y:-50,
-      },
-      {
-        x:50,
-        y:150,
-      },
-      {
-        x:-50,
-        y:150,
-      }
+          id:1,
+          x:-50,
+          y:50,
+        },
+        {
+          id:2,
+          x:-50,
+          y:-50,
+        },
+        {
+          id:3,
+          x:50,
+          y:50,
+        },
+        {
+          id:4,
+          x:50,
+          y:-50,
+        },
+        {
+          id:5,
+          x:50,
+          y:150,
+        },
+        {
+          id:6,
+          x:-50,
+          y:150,
+        }
     ],
 
     loads:[
@@ -234,10 +242,34 @@ export default{
     }
   },
 
+  computed: {
+    centroid_pos: function () {
+      if (this.result != "")
+      {
+        return [
+          {
+            x:this.result.centroid_x,
+            y:this.result.centroid_y
+          }
+        ]
+      }
+    },
+
+    forces_scale: function () {
+      return 0.1
+    },
+
+    bolt_radius: function () {
+      var splitted = this.selected_bolt_type.split("").splice(-2)
+      return parseInt(splitted.join(""))/2
+    }
+  },
+
   methods:{
 
     addNewBolt(){
       this.bolts.push({
+        id:this.bolts.length+1,
         x:20,
         y:20,
       })
@@ -260,66 +292,20 @@ export default{
       })
     },
 
+    reorderBolts: function(){
+      var x;
+      for (x in this.bolts) {
+        this.bolts[x].id = parseInt(x)+1;
+      }
+    },
+
     removeBolt: function (index) {
       this.$delete(this.bolts, index);
+      this.reorderBolts()
     },
 
     removeLoad: function (index) {
       this.$delete(this.loads, index);
-    },
-
-    zoomOut(){
-      this.zoom += 1
-    },
-
-    zoomIn(){
-
-      if (this.zoom > 1){
-        this.zoom -= 1;
-      }
-    },
-
-    viewboxFitAll: function () {
-
-      let max_x = 0;
-      let max_y = 0;
-      let min_x = 0;
-      let min_y = 0;
-
-      for(let i = 0; i < this.bolts.length; i++){
-        if (this.bolts[i].x > max_x) {
-          max_x = this.bolts[i].x
-        }
-        if (this.bolts[i].y > max_y) {
-          max_y = this.bolts[i].y
-        }
-        if (this.bolts[i].x < min_x) {
-          min_x = this.bolts[i].x
-        }
-        if (this.bolts[i].y < min_y) {
-          min_y = this.bolts[i].y
-        }
-      };
-
-      for(let i = 0; i < this.loads.length; i++){
-
-        max_x = Math.max(this.loads[i].x,this.loads[i].x+this.loads[i].x)
-
-        if (this.loads[i].x > max_x) {
-          max_x = this.loads[i].x
-        }
-        if (this.loads[i].y > max_y) {
-          max_y = this.loads[i].y
-        }
-        if (this.loads[i].x < min_x) {
-          min_x = this.loads[i].x
-        }
-        if (this.loads[i].y < min_y) {
-          min_y = this.loads[i].y
-        }
-      };
-
-      this.viewPort  = [min_x-50, min_y-50, max_x-min_x+100, max_y-min_y+100]
     },
 
     getBoltInfo(){
@@ -353,14 +339,13 @@ export default{
        }
   },
 
-  computed:{
-
-  },
-
   mounted: function() {
     this.getBoltInfo();
-  }
+  },
 
+  components: {
+    SvgGraph
+  }
 }
 
 </script>
@@ -373,7 +358,6 @@ export default{
     background-color: white;
     padding: 10px;
 }
-
 .input-label-50px{
   width: 50px;
   display: inline-block;
@@ -383,7 +367,6 @@ export default{
   letter-spacing: normal;
 
 }
-
 .input-label-100px{
   width: 100px;
   display: inline-block;
@@ -393,7 +376,6 @@ export default{
   letter-spacing: normal;
 
 }
-
 .input-label{
   display: inline-block;
   font-family: Metropolis Regular;
@@ -402,7 +384,6 @@ export default{
   letter-spacing: normal;
 
 }
-
 .button {
     background-color: #007CBB;
     border: none;
@@ -415,20 +396,6 @@ export default{
     font-size: 13px;
     border-radius: 6px;
 }
-
-.button_submit {
-    background-color: #62A420;
-    border: none;
-    color: white;
-    font-family: Metropolis Regular;
-    padding: 6px 12px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 13px;
-    border-radius: 6px;
-}
-
 .button_del {
     background-color: #E62700;
     border: none;
@@ -441,7 +408,6 @@ export default{
     font-size: 10px;
     border-radius: 6px;
 }
-
 input {
     width: 100%;
 }

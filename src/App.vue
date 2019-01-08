@@ -27,6 +27,7 @@ body{
     margin:0;
     font-family:"Metropolis",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
     font-weight: 400;
+    overflow-y: overlay;
 }
 
 h1 {
@@ -165,6 +166,19 @@ h6 {
     .col-10 {width: 83.33%;}
     .col-11 {width: 91.66%;}
     .col-12 {width: 100%;}
+}
+
+.button_submit {
+    background-color: #62A420;
+    border: none;
+    color: white;
+    font-family: Metropolis Regular;
+    padding: 6px 12px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 13px;
+    border-radius: 6px;
 }
 
 </style>

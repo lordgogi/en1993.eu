@@ -35,8 +35,8 @@
             <input class="output" type="number" min="0" v-model="t_f" style="width: 100px; display: inline-block"></input>
             <div class="output">{{units}}</div>
           </div>
-
-          <button v-on:click="submitBasic">Submit</button>
+          <br>
+          <button v-on:click="submitBasic" class="button_submit">CALCULATE</button>
 
         </div>
 

@@ -16,7 +16,8 @@
             <input class="output" type="number" min="0" v-model="r_i" style="width: 100px; display: inline-block"></input>
             <div class="input-label">{{units}}</div>
           </div>
-          <button v-on:click="submitBasic">Submit</button>
+          <br>
+          <button v-on:click="submitBasic" class="button_submit">CALCULATE</button>
       </div>
 
       <div slot="picture">
