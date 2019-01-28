@@ -16,6 +16,9 @@
 6. Welding Prodcedure Specification Generator
 7. Plated elements subjected to out-of-plane LOADING
 8. DNV stiffened panel calculation
+9. Verification of runway beam subject to wheel loads
+10. Eurocode wind load Calculator
+11. Welded plate I section shear connections and Buckling
 
 ### Really far fetched sugestions
 

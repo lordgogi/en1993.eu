@@ -126,13 +126,11 @@ h6 {
 [class*="col-"] {
     float: left;
     padding:4px
-
-
 }
 
 /* For mobile phones: */
 [class*="col-"] {
-    width: 100%;
+    width: 98%;
     border-style: dashed;
     border-width: 0px;
 }

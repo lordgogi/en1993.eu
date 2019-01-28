@@ -3,6 +3,7 @@
 		<div class="logo"><router-link to="/">EN1993.eu</router-link></div>
 		<span class="nav-link"><router-link to="/I_Shape">CROSS SECTION PROPERTIES</router-link></span>
 		<span class="nav-link"><router-link to="/BoltInLine">BOLT IN-PLANE LOADING</router-link></span>
+		<span class="nav-link"><router-link to="/SC_simple_partial_endplate">PARTIAL END PLATE STEEL CONNECTION</router-link></span>
 	</div>
 </template>
 

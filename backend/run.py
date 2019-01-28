@@ -3,6 +3,7 @@ from flask_restful import Resource, Api
 from flask_cors import CORS
 from CrossSection import *
 from Bolts import *
+from Beams import *
 
 app = Flask(__name__)
 api = Api(app)
@@ -21,6 +22,14 @@ class JsonExample(Resource):
 class GetBoltOptions(Resource):
     def get(self):
         return jsonify(get_bolt_options())
+
+class GetBeamsOptions(Resource):
+    def get(self):
+        return jsonify(get_beams_options())
+
+class GetMaterialsOptions(Resource):
+    def get(self):
+        return jsonify(get_materials_options())
 
 class GetBoltInlineResults(Resource):
     def post(self):
@@ -41,6 +50,8 @@ class GetBoltInlineResults(Resource):
 api.add_resource(HelloWorld,"/")
 api.add_resource(JsonExample,"/json-example")
 api.add_resource(GetBoltOptions,"/get-bolt-options")
+api.add_resource(GetBeamsOptions,"/get-beams-options")
+api.add_resource(GetMaterialsOptions,"/get-materials-options")
 api.add_resource(GetBoltInlineResults,"/get-bolt-inline-result")
 
 #if __name__ == '__main__':

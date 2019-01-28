@@ -10,16 +10,16 @@ import TStiffShape from '@/components/sections/TStiffShape.vue'
 import LShape from '@/components/sections/LShape.vue'
 import UShape from '@/components/sections/UShape.vue'
 import CHSShape from '@/components/sections/CHSShape.vue'
-import test from '@/components/test.vue'
+import SC_simple_partial_endplate from '@/components/SC_simple_partial_endplate.vue'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: '/test',
-      name: 'test',
-      component: test
+      path: '/SC_simple_partial_endplate',
+      name: 'SC_simple_partial_endplate',
+      component: SC_simple_partial_endplate
     },
     {
       path: '/BoltInLine',
